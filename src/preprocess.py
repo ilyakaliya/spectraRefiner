@@ -35,7 +35,7 @@ def process_spectra(input_dir, output_dir, crop_region=None, baseline_method=Non
             # Load the spectral data
             try:
                 data = pd.read_csv(file_path)
-                print(dict(data["metadata"][0])) # need to turn str to dict!!! to later add cropped files!!! do tmrw
+                print(type(eval(data["metadata"][0])['sample'])) # need to turn str to dict!!! to later add cropped files!!! do tmrw
             except Exception as e:
                 print(f"Failed to load file {file_name}: {e}")
                 continue
@@ -50,12 +50,13 @@ def process_spectra(input_dir, output_dir, crop_region=None, baseline_method=Non
                 data = crop_spectral_region(data, start, end)
 
             # Create output folder for the sample
-            sample_folder = cropped_dir / data['metadata'][0]['sample']
+            sample_folder = cropped_dir / eval(data["metadata"][0])['sample']
             sample_folder.mkdir(parents=True, exist_ok=True)
 
             # Save processed data as .csv
-            spectrum_type = data['metadata'][0]['spectrumType']
-            output_file = sample_folder / f"{spectrum_type}_{data['metadata'][0]['temperature']}_cropped.csv"
+            spectrum_type = eval(data["metadata"][0])['spectrumType']
+            temperature = eval(data["metadata"][0])['temperature']
+            output_file = sample_folder / f"{spectrum_type}_{temperature}_cropped.csv"
             data.to_csv(output_file, index=False)
             print(f"Processed {file_name} -> {output_file}")
 
