@@ -8,7 +8,9 @@ stages:
       - data/processed/combined_data.csv
 
   preprocess:
-    cmd: python src/preprocess.py data/processed/combined_data.csv data/processed/filtered_data.csv config.yaml
+    cmd: python src/preprocess.py 
+    data/processed/combined_data.csv
+    data/processed/filtered_data.csv config.yaml
     deps:
       - src/preprocess.py
       - data/processed/combined_data.csv
@@ -17,7 +19,9 @@ stages:
       - data/processed/filtered_data.csv
 
   find_peaks:
-    cmd: python src/peak_analysis.py data/processed/filtered_data.csv data/peaks
+    cmd: python src/peak_analysis.py 
+    data/processed/filtered_data.csv 
+    data/peaks
     deps:
       - src/peak_analysis.py
       - data/processed/filtered_data.csv

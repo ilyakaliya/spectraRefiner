@@ -19,7 +19,9 @@ def process_spectra(input_dir, output_dir):
 
     for file_name in os.listdir(input_dir):
         if file_name.endswith('.txt'):
+            print(file_name)
             file_path = input_dir / file_name
+            print(file_path)
 
             # Parse metadata from the file name
             try:
