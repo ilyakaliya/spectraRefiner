@@ -1,6 +1,8 @@
 import numpy as np
 import scipy.signal as signal
+import matplotlib.pyplot as plt
 from matplotlib import pyplot as plt
+
 
 def find_peaks_in_region(wavelengths, intensities, start_wl, end_wl, prominence=0.1, distance=5):
     """Find peaks in a defined spectral region."""
@@ -16,23 +18,20 @@ def find_peaks_in_region(wavelengths, intensities, start_wl, end_wl, prominence=
     # Return peak positions in the original wavelength scale
     return cropped_wl[peaks], cropped_int[peaks]
 
-# Simulated spectrum
-wavelengths = np.linspace(400, 800, 500)  # Wavelength range
-intensities = np.exp(-((wavelengths - 600) / 30) ** 2) + 0.1 * np.random.rand(500)  # Gaussian peak with noise
+# Simulated discrete spectrum
+x = np.linspace(400, 800, 500)  # Wavelengths
+y = np.exp(-((x - 600) / 30) ** 2) + 0.1 * np.random.rand(len(x))  # Gaussian peak with noise
 
-# Define the spectral region (e.g., 500-700 nm)
-start_wl, end_wl = 500, 700
-
-# Find peaks in this region
-peaks_wl, peaks_int = find_peaks_in_region(wavelengths, intensities, start_wl, end_wl)
-
-# Print detected peaks
-print("Peaks found at:", peaks_wl)
+# Find peaks with prominence filtering
+peaks, properties = find_peaks_in_region(x, y,500,700)
 
 # Plot
 plt.plot(x, y, label="Spectrum")
-plt.plot(x[peaks_wl], y[peaks_int], "ro", label="Detected Peaks")
+plt.plot(peaks[0], properties[0], "ro", label="Detected Peaks")
 plt.xlabel("Wavelength (nm)")
 plt.ylabel("Intensity")
 plt.legend()
 plt.show()
+
+print(peaks)
+print(properties)
