@@ -2,6 +2,7 @@ from matplotlib import pyplot as plt
 import pandas as pd
 import scipy.signal as signal
 import re
+import os
 
 class Spectrum:
 
@@ -30,6 +31,11 @@ class Spectrum:
     plt.title(f'{self.type} spectrum of sample {self.sample_name} at {self.temperature} K')
     plt.legend([f'{self.sample_name}'])
     plt.show()
+
+  def plot_batch(dir_path, comparison_parameter = 'temperature'):
+    for file in os.listdir(dir_path):
+
+
 
   def find_peaks_in_region(self, wavelengths, intensities, start_wl, end_wl, prominence=0.1, distance=5):
     """Find peaks in a defined spectral region."""
